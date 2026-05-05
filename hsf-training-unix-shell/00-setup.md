@@ -131,7 +131,84 @@ which can be found via the applications menu or the search bar.
 If your machine is set up to use something other than Bash,
 you can run it by opening a terminal and typing `bash`.
 
+
+
 ::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::  callout
+ 
+## SSH Access to the CMS LPC (cmslpc)
+ 
+The CMS LPC (LHC Physics Center at Fermilab) provides access to the **cmslpc cluster**,
+which is widely used for CMS data analysis.
+ 
+Before connecting, make sure you:
+* Have a valid **Fermilab (FNAL) account**
+* Have access to the **cmslpc cluster**
+* Have **Kerberos configured** on your machine
+> Account setup can take time, so request access early.
+ 
+### 1. Authenticate with Kerberos
+ 
+CMS LPC uses **Kerberos authentication**, not simple password SSH.
+ 
+```bash
+kinit <YOUR_USERNAME>@FNAL.GOV
+```
+ 
+* Enter your FNAL password when prompted
+* This gives you a valid ticket (~24 hours)
+### 2. Connect via SSH
+ 
+Once authenticated, log in with:
+ 
+```bash
+ssh -Y <YOUR_USERNAME>@cmslpc-el9.fnal.gov
+```
+ 
+* `-Y` enables X11 forwarding (useful for GUIs)
+* If successful, you will see a welcome message and a shell prompt
+### 3. Typical First Commands
+ 
+```bash
+# go to your working area
+cd ~/nobackup
+ 
+# create a working directory
+mkdir my_work
+cd my_work
+```
+ 
+### 4. Recommended SSH Config (Optional)
+ 
+To simplify login, add this to your `~/.ssh/config`:
+ 
+```bash
+Host cmslpc
+    HostName cmslpc-el9.fnal.gov
+    User <YOUR_USERNAME>
+    ForwardX11 yes
+```
+ 
+Then you can simply run:
+ 
+```bash
+ssh cmslpc
+```
+ 
+### 5. Notes & Tips
+ 
+* You must renew your Kerberos ticket daily:
+  ```bash
+  kinit <YOUR_USERNAME>@FNAL.GOV
+  ```
+* If login fails, common issues are:
+  * Expired Kerberos ticket
+  * Incorrect SSH/Kerberos config
+  
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 [zip-file]: data/shell-lesson-data.zip
 [install_shell]: https://carpentries.github.io/workshop-template/install_instructions/#shell
