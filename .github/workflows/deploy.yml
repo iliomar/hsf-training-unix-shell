@@ -37,7 +37,8 @@ jobs:
 
       # Build the book
       - name: Build the book
-        run: cd hsf-training-unix-shell/filesystem/Users/nelle && jupyter-book build ../../../../hsf-training-unix-shell
+        #run: cd hsf-training-unix-shell/filesystem/Users/nelle && jupyter-book build ../../../../hsf-training-unix-shell
+        run: jupyter-book build hsf-training-unix-shell
 
       # Upload the book's HTML as an artifact
       - name: Upload artifact
